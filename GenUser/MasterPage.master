@@ -10,6 +10,7 @@
         .auto-style2 { width: 844px; }
         .auto-style3 { width: 155px; }
         .auto-style4 { width: 118px; }
+<<<<<<< HEAD
         .auto-style5 { width: 220px; }
         .auto-style6 {
             width: 145px;
@@ -17,12 +18,23 @@
     </style>
 </head>
 <body style="height: 144px">
+=======
+        .auto-style5 { width: 280px; }
+        .auto-style6 { width: 216px; }
+    </style>
+</head>
+<body>
+>>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
     <form id="form1" runat="server">
         <div>
             <table class="auto-style1">
                 <tr>
                     <td class="auto-style2">
+<<<<<<< HEAD
                         <asp:Label ID="Label1" runat="server" Font-Size="20pt" Text="HealthCare" ForeColor="#00FFCC"></asp:Label>
+=======
+                        <asp:Label ID="Label1" runat="server" Font-Size="20pt" Text="Women Problem"></asp:Label>
+>>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
                     </td>
                     <td>
                         <table class="auto-style1">
@@ -41,10 +53,18 @@
                                     </asp:DropDownList>
                                 </td>
                                 <td class="auto-style6">
+<<<<<<< HEAD
                                     <asp:HyperLink ID="HyperLink4" runat="server" Font-Size="15pt" NavigateUrl="~/GenUser/about.aspx">About</asp:HyperLink>
                                 </td>
                                 <td>
                                     <asp:HyperLink ID="HyperLink3" runat="server" Font-Size="15pt" NavigateUrl="~/GenUser/Home.aspx">Logout</asp:HyperLink>
+=======
+                                    <asp:Label ID="Label5" runat="server" Font-Size="15pt" Text="About"></asp:Label>
+                                </td>
+                                <td>
+                                    <asp:Label ID="lblUserName" runat="server" Font-Size="15pt" Text="Welcome, Guest"></asp:Label>
+                                    <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" Visible="false" />
+>>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
                                 </td>
                             </tr>
                         </table>
@@ -53,7 +73,11 @@
             </table>
         </div>
         <br />
+<<<<<<< HEAD
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
+=======
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
+>>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
     </form>
 </body>
 </html>

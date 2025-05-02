@@ -6,6 +6,7 @@ public partial class GenUser_Home : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+<<<<<<< HEAD
         // Run only on initial load, not on postbacks
         if (!IsPostBack)
         {
@@ -20,6 +21,9 @@ public partial class GenUser_Home : System.Web.UI.Page
 
             // You could also load announcements, dashboard data, etc., here
         }
+=======
+       
+>>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
     }
 
     // Future search handling logic can go here

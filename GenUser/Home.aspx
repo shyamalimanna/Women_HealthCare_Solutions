@@ -2,6 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
     <style type="text/css">
+<<<<<<< HEAD
         .home-container {
             height: 100vh;
             background-image: url('../Picture/image.jpg');
@@ -18,6 +19,14 @@
             max-width: 700px;
         height: 375px;
     }
+=======
+        
+
+        .search-box {
+            width: 60%;
+            max-width: 700px;
+        }
+>>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
 
         .search-box input[type="search"] {
             font-size: 18px;
@@ -32,6 +41,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="home-container">
         <div class="search-box">
+<<<<<<< HEAD
+=======
+            <asp:TextBox ID="TextBox1" runat="server" TextMode="Search" CssClass="form-control" placeholder="Search for health-related questions..."></asp:TextBox>
+>>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
         </div>
     </div>
 </asp:Content>
