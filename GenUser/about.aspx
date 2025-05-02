@@ -6,7 +6,11 @@
         font-size: large;
         height: 76px;
         width: 1734px;
+
+
         margin-left: 24px;
+
+        
     }
 </style>
 </asp:Content>
