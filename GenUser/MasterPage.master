@@ -3,81 +3,214 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title>Women Problem Portal</title>
-    <asp:ContentPlaceHolder id="head" runat="server" />
+    <title>Women's HealthCare Solutions</title>
+    <asp:ContentPlaceHolder ID="head" runat="server" />
     <style type="text/css">
         .auto-style1 { width: 100%; }
         .auto-style2 { width: 844px; }
         .auto-style3 { width: 155px; }
         .auto-style4 { width: 118px; }
-<<<<<<< HEAD
-        .auto-style5 { width: 220px; }
-        .auto-style6 {
-            width: 145px;
-        }
-    </style>
-</head>
-<body style="height: 144px">
-=======
-        .auto-style5 { width: 280px; }
         .auto-style6 { width: 216px; }
+        html, body {
+    overflow-x: hidden;
+}
+
+
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px 14px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover { background-color: #f1f1f1; }
+
+        .signup-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            min-width: 200px;
+            max-width: 250px;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-button:hover {
+            background-color: #45a049;
+        }
+
+        .signup-button:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 16px 24px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007b7f;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #007b7f;
+        }
+
+        .dropdown-button {
+            background-color: #007b7f;
+            color: #fff;
+            padding: 10px 16px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-button:hover {
+            background-color: #005f5f;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 120%;
+            left: 0;
+            background-color: white;
+            min-width: 160px;
+            border-radius: 4px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px 14px;
+            color: #333;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Footer styling */
+        .footer {
+            background-color: #007b7f;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            
+            bottom: 0;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .footer .footer-text {
+            font-size: 14px;
+        }
+
     </style>
+
+    <script type="text/javascript">
+        function toggleDropdown() {
+            var content = document.getElementById("signupDropdown");
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        }
+
+        document.addEventListener("click", function (event) {
+            var dropdown = document.getElementById("signupDropdown");
+            var button = document.getElementById("signupBtn");
+            if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.style.display = "none";
+            }
+        });
+    </script>
 </head>
 <body>
->>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
     <form id="form1" runat="server">
         <div>
-            <table class="auto-style1">
-                <tr>
-                    <td class="auto-style2">
-<<<<<<< HEAD
-                        <asp:Label ID="Label1" runat="server" Font-Size="20pt" Text="HealthCare" ForeColor="#00FFCC"></asp:Label>
-=======
-                        <asp:Label ID="Label1" runat="server" Font-Size="20pt" Text="Women Problem"></asp:Label>
->>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
-                    </td>
-                    <td>
-                        <table class="auto-style1">
-                            <tr>
-                                <td class="auto-style3">
-                                    <asp:HyperLink ID="HyperLink1" runat="server" Font-Size="15pt" NavigateUrl="~/GenUser/Home.aspx">Home</asp:HyperLink>
-                                </td>
-                                <td class="auto-style4">
-                                    <asp:HyperLink ID="HyperLink2" runat="server" Font-Size="15pt" NavigateUrl="~/GenUser/Login.aspx">Login</asp:HyperLink>
-                                </td>
-                                <td class="auto-style5">
-                                    <asp:DropDownList ID="DropDownList1" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
-                                        <asp:ListItem Text="Registration Form" Value="" />
-                                        <asp:ListItem Text="Doctor" Value="~/GenUser/doctorReg.aspx" />
-                                        <asp:ListItem Text="Patient" Value="~/GenUser/patientReg.aspx" />
-                                    </asp:DropDownList>
-                                </td>
-                                <td class="auto-style6">
-<<<<<<< HEAD
-                                    <asp:HyperLink ID="HyperLink4" runat="server" Font-Size="15pt" NavigateUrl="~/GenUser/about.aspx">About</asp:HyperLink>
-                                </td>
-                                <td>
-                                    <asp:HyperLink ID="HyperLink3" runat="server" Font-Size="15pt" NavigateUrl="~/GenUser/Home.aspx">Logout</asp:HyperLink>
-=======
-                                    <asp:Label ID="Label5" runat="server" Font-Size="15pt" Text="About"></asp:Label>
-                                </td>
-                                <td>
-                                    <asp:Label ID="lblUserName" runat="server" Font-Size="15pt" Text="Welcome, Guest"></asp:Label>
-                                    <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" Visible="false" />
->>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+            <div class="navbar">
+                <div class="brand">
+                    Women's HealthCare Solutions
+                </div>
+                <div class="nav-links">
+                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/GenUser/Home.aspx">Home</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/GenUser/Login.aspx">Login</asp:HyperLink>
+
+                    <!-- Dropdown Sign Up -->
+                    <div class="dropdown">
+                        <button type="button" id="signupBtn" class="dropdown-button" onclick="toggleDropdown()">Sign Up</button>
+                        <div class="dropdown-content" id="signupDropdown">
+                            <a href="doctorReg.aspx">Doctor</a>
+                            <a href="patientReg.aspx">Patient</a>
+                        </div>
+                    </div>
+
+                    <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/GenUser/about.aspx">About</asp:HyperLink>
+                    <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/GenUser/Home.aspx">Logout</asp:HyperLink>
+
+                    <!-- Welcome + Logout -->
+                    <div class="user-info">
+                        <asp:Label ID="lblUserName" runat="server" Text="Welcome, Guest"></asp:Label>
+                        <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" Visible="false" />
+                    </div>
+                </div>
+            </div>
         </div>
         <br />
-<<<<<<< HEAD
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"></asp:ContentPlaceHolder>
-=======
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server" />
->>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-text">
+                &copy; 2025 Women's HealthCare Solutions. Developed by Shyamali Manna
+            </div>
+        </div>
     </form>
 </body>
 </html>

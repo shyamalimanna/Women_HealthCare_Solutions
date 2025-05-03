@@ -12,7 +12,7 @@ public partial class GenUser_Login : System.Web.UI.Page
     {
         string email = txtEmail.Text.Trim();
         string password = txtPassword.Text.Trim();
-        string role = rbDoctor.Checked ? "Doctor" : "Patient";
+        string role = ddlRole.SelectedValue;  // Get the selected role from the dropdown
 
         string conStr = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
         using (SqlConnection con = new SqlConnection(conStr))

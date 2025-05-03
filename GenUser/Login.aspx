@@ -2,77 +2,141 @@
     AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="GenUser_Login" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-<<<<<<< HEAD
-     <style type="text/css">
+    <style type="text/css">
+        /* Container for the background image */
         .home-container {
             height: 100vh;
-            background-image: url('../Picture/health-it.jpg');
+            background-image: url('../Picture/login3.jpg');
             background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
             display: flex;
-            flex-direction: column;
-                justify-content: center;
+            justify-content: center;
             align-items: center;
-            
+            padding: 40px;
         }
-         .input {
-             margin: 10px 0;
-         }
-         .auto-style7 {
-             font-size: xx-large;
-         }
-         .auto-style8 {
-             font-size: medium;
-         }
-        </style>
+
+        /* Form container for login fields */
+        .login-form {
+            width: 100%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styling for heading */
+        .login-form h2 {
+            text-align: center;
+            font-size: 28px;
+            color: #007b7f;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for label */
+        .login-form label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        /* Styling for input fields */
+        .login-form input[type="text"],
+        .login-form input[type="password"],
+        .login-form input[type="email"],
+        .login-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s ease-in-out;
+        }
+
+        /* Focus effect on input fields */
+        .login-form input:focus,
+        .login-form select:focus {
+            border-color: #007b7f;
+            outline: none;
+        }
+
+        /* Styling for dropdown */
+        .login-form select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"%3E%3Cpath fill="none" d="M0 0h20v20H0z"/%3E%3Cpath d="M5 7h10l-5 6z" fill="%23aaa"/%3E%3C/svg%3E');
+            background-position: right 10px center;
+            background-repeat: no-repeat;
+            padding-right: 30px;
+        }
+
+        /* Styling for login button */
+        .login-form button {
+            background-color: #007b7f;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-form button:hover {
+            background-color: #005f5f;
+        }
+
+        /* Message label styling */
+        .login-form .message {
+            text-align: center;
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div class="home-container" style="padding: 40px; width: 90vw; margin: auto; background-color: #f5f5f5; height: 471px;">
-        <h2 style="text-align: center;" class="auto-style7">Login</h2>
+    <div class="home-container">
+        <div class="login-form">
+            <h2>Login</h2>
 
-        <div>
-             <asp:Label ID="lblRole" runat="server" Text="Login As:" Font-Size="14pt"></asp:Label><br />
-        <asp:RadioButton ID="rbDoctor" runat="server" Text="Doctor" GroupName="Role" Checked="true" CssClass="auto-style8" />
-        <asp:RadioButton ID="rbPatient" runat="server" Text="Patient" GroupName="Role" CssClass="auto-style8" />
+            <!-- Role Selection using Dropdown -->
+            <div class="input">
+                <label for="ddlRole">Login As:</label>
+                <asp:DropDownList ID="ddlRole" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="Doctor">Doctor</asp:ListItem>
+                    <asp:ListItem Value="Patient" Selected="True">Patient</asp:ListItem>
+                </asp:DropDownList>
+            </div>
+
+            <!-- Email Input -->
+            <div class="input">
+                <label for="txtEmail">Email:</label>
+                <asp:TextBox ID="txtEmail" runat="server" Width="100%" Height="40px" />
+            </div>
+
+            <!-- Password Input -->
+            <div class="input">
+                <label for="txtPassword">Password:</label>
+                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" Width="100%" Height="40px" />
+            </div>
+
+            <!-- Login Button -->
+            <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click"
+                BackColor="#00FF99" Height="42px" Width="100%" Font-Size="15pt" class="btn" />
+
+            <!-- Message Label for login errors -->
+            <div class="message">
+                <asp:Label ID="lblMessage" runat="server" ForeColor="Red" />
+            </div>
         </div>
-
-        <div class="input" style="width:30%; height: 70px;">
-            <asp:Label ID="lblEmail" runat="server" Text="Email:" Font-Size="14pt"></asp:Label><br />
-        <asp:TextBox ID="txtEmail" runat="server" Width="93%" Height="43px" />
-        </div>
-
-        <div class="input" style="width:30%">
-            <asp:Label ID="lblPassword" runat="server" Text="Password:" Font-Size="14pt"></asp:Label><br />
-        <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" Width="94%" Height="40px" />
-        </div>
-
-        <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" BackColor="#00FF99" Height="42px" Width="83px" Font-Size="15pt" /><br /><br />
-=======
-</asp:Content>
-
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div style="padding: 40px; width: 400px; margin: auto; background-color: #f5f5f5;">
-        <h2 style="text-align: center;">Login</h2>
-
-        <asp:Label ID="lblRole" runat="server" Text="Login As:"></asp:Label><br />
-        <asp:RadioButton ID="rbDoctor" runat="server" Text="Doctor" GroupName="Role" Checked="true" />
-        <asp:RadioButton ID="rbPatient" runat="server" Text="Patient" GroupName="Role" /><br /><br />
-
-        <asp:Label ID="lblEmail" runat="server" Text="Email:"></asp:Label><br />
-        <asp:TextBox ID="txtEmail" runat="server" Width="100%" /><br /><br />
-
-        <asp:Label ID="lblPassword" runat="server" Text="Password:"></asp:Label><br />
-        <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" Width="100%" /><br /><br />
-
-        <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" /><br /><br />
->>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
-
-        <asp:Label ID="lblMessage" runat="server" ForeColor="Red" />
     </div>
 </asp:Content>
-<<<<<<< HEAD
-
-=======
->>>>>>> 181909b7de07d0ab45e8101fc90f356718706fe5
