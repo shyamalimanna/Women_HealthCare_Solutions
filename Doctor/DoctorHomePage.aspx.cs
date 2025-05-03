@@ -20,6 +20,9 @@ public partial class Doctor_DoctorHomePage : System.Web.UI.Page
         }
         */
 
+        //any chnages happen then if u want to update on git u have to do like this. follow me.
+        //1. save this by ctrl+s then
+
         if (true)
         {
             lblUserName.Text = "Shyamali";
