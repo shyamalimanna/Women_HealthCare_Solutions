@@ -14,7 +14,7 @@
         .container {
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
-            height: 530px;
+            height: 600px; /* Increased height to accommodate password field */
             margin: 100px auto;
             border-radius: 10px;
             width: 50%;
@@ -101,6 +101,12 @@
         <div class="form-group">
             <asp:Label ID="Label11" runat="server" CssClass="form-label" Text="License"></asp:Label>
             <asp:FileUpload ID="FileUpload1" runat="server" CssClass="form-input" />
+        </div>
+
+        <!-- Added password field -->
+        <div class="form-group">
+            <asp:Label ID="Label12" runat="server" CssClass="form-label" Text="Password"></asp:Label>
+            <asp:TextBox ID="TextBoxPassword" runat="server" TextMode="Password" CssClass="form-input" /><br />
         </div>
 
         <div class="form-group">
