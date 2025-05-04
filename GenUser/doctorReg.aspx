@@ -110,7 +110,7 @@
         </div>
 
         <div class="form-group">
-            <asp:Button ID="btnRegister" runat="server" Text="Register" CssClass="form-input" OnClick="btnRegister_Click" />
+            <asp:Button ID="btnRegister" runat="server" Text="Register" CssClass="form-input" OnClick="btnRegister_Click" Height="49px" />
         </div>
     </div>
 </asp:Content>
