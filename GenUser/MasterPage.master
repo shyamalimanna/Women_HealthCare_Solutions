@@ -192,12 +192,12 @@
                     </div>
 
                     <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/GenUser/about.aspx">About</asp:HyperLink>
-                    <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/GenUser/Home.aspx">Logout</asp:HyperLink>
+                    <!-- <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/GenUser/Home.aspx">Logout</asp:HyperLink> -->
 
                     <!-- Welcome + Logout -->
                     <div class="user-info">
                         <asp:Label ID="lblUserName" runat="server" Text="Welcome, Guest"></asp:Label>
-                        <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" Visible="false" />
+                      <!--  <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" Visible="false" />  -->
                     </div>
                 </div>
             </div>

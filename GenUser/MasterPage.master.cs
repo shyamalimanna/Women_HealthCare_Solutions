@@ -9,8 +9,8 @@ public partial class GenUser_MasterPage : System.Web.UI.MasterPage
         // Check if the user is logged in
         if (Session["username"] != null)
         {
-            lblUserName.Text = "Welcome, " + Session["username"].ToString();
-            btnLogout.Visible = true;
+            //lblUserName.Text = "Welcome, " + Session["username"].ToString();
+           // btnLogout.Visible = true;
         }
         else
         {
@@ -24,7 +24,7 @@ public partial class GenUser_MasterPage : System.Web.UI.MasterPage
     protected void btnLogout_Click(object sender, EventArgs e)
     {
         // Clear session and redirect to login
-        Session.Clear();
-        Response.Redirect("~/GenUser/Login.aspx");
+       // Session.Clear();
+       // Response.Redirect("~/GenUser/Login.aspx");
     }
 }
