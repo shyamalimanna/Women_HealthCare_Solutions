@@ -1,67 +1,96 @@
-﻿<%@ Page Title="View Questions" Language="C#" AutoEventWireup="true" CodeFile="viewQuestions.aspx.cs" Inherits="Doctor_ViewQuestions" MasterPageFile="~/Doctor/MasterPage.master" %>
+﻿<%@ Page Title="View Patient Questions" Language="C#" MasterPageFile="~/Doctor/MasterPage.master"
+    AutoEventWireup="true" CodeFile="ViewQuestions.aspx.cs" Inherits="Doctors_ViewQuestions" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content2" ContentPlaceHolderID="head" runat="Server">
     <style>
-        .questions-container {
-            margin: 60px auto;
+        .question-container {
             max-width: 900px;
-            background-color: #ffffffd9;
-            padding: 30px;
+            margin: 30px auto;
+            padding: 10px;
+        }
+
+        .question-card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 25px;
         }
 
-        .questions-title {
-            font-size: 24px;
+        .question-label {
             font-weight: bold;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #007b7f;
+            color: #333;
+            margin-top: 8px;
         }
 
-        .questions-table {
+        .question-value {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .answer-box {
             width: 100%;
-            border-collapse: collapse;
-        }
-
-        .questions-table th,
-        .questions-table td {
+            min-height: 100px;
+            font-size: 14px;
+            padding: 10px;
             border: 1px solid #ccc;
-            padding: 12px;
-            text-align: left;
+            border-radius: 6px;
+            resize: vertical;
+            margin-top: 10px;
         }
 
-        .questions-table th {
+        .submit-btn {
+            margin-top: 12px;
             background-color: #007b7f;
             color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
         }
 
-        .answer-link {
-            padding: 6px 12px;
-            background-color: #007b7f;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
+        .submit-btn:hover {
+            background-color: #005f60;
         }
 
-        .answer-link:hover {
-            background-color: #005f63;
+        .message-label {
+            font-weight: bold;
+            color: green;
+            margin-top: 15px;
+            display: block;
         }
     </style>
+</asp:Content>
 
-    <div class="questions-container">
-        <div class="questions-title">Patient Questions</div>
-        <asp:GridView ID="gvQuestions" runat="server" AutoGenerateColumns="False" CssClass="questions-table" EmptyDataText="No questions available.">
-            <Columns>
-                <asp:BoundField DataField="PatientName" HeaderText="Patient Name" />
-                <asp:BoundField DataField="Question" HeaderText="Question" />
-                <asp:BoundField DataField="DateAsked" HeaderText="Date Asked" DataFormatString="{0:dd MMM yyyy}" />
-                <asp:TemplateField HeaderText="Action">
-                    <ItemTemplate>
-                        <a href='AnswerQuestion.aspx?questionId=<%# Eval("QuestionId") %>' class="answer-link">Answer</a>
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-        </asp:GridView>
+<asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="question-container">
+        <asp:Repeater ID="rptQuestions" runat="server" OnItemCommand="rptQuestions_ItemCommand">
+            <ItemTemplate>
+                <div class="question-card">
+                    <div class="question-label">Question:</div>
+                    <div class="question-value"><%# Eval("QuestionText") %></div>
+
+                    <div class="question-label">Category:</div>
+                    <div class="question-value"><%# Eval("Category") %></div>
+
+                    <div class="question-label">Asked by:</div>
+                    <div class="question-value"><%# Eval("PatientEmail") %></div>
+
+                    <div class="question-label">Asked on:</div>
+                    <div class="question-value"><%# Eval("AskedDate", "{0:dd-MMM-yyyy hh:mm tt}") %></div>
+
+                    <div class="question-label">Your Answer:</div>
+                    <asp:TextBox ID="txtAnswer" runat="server" CssClass="answer-box" TextMode="MultiLine" />
+
+                    <asp:Button ID="btnSubmit" runat="server" CommandName="Answer" 
+                                CommandArgument='<%# Eval("QuestionID") %>' Text="Submit Answer" 
+                                CssClass="submit-btn" />
+                </div>
+            </ItemTemplate>
+        </asp:Repeater>
+
+        <asp:Label ID="lblMessage" runat="server" CssClass="message-label" />
     </div>
 </asp:Content>

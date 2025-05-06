@@ -4,7 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>Doctor - Women's HealthCare Solutions</title>
-    <style type="text/css">
+   <!-- Add ContentPlaceHolder for head -->
+     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+     <style type="text/css">
         body {
             margin: 0;
             font-family: Arial, sans-serif;

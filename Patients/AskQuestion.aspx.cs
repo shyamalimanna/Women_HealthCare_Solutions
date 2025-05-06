@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
 
 public partial class Patients_AskQuestion : System.Web.UI.Page
 {
@@ -35,6 +38,15 @@ public partial class Patients_AskQuestion : System.Web.UI.Page
         if (!IsPostBack)
         {
             LoadCategories();
+            txtQuestion.Text = "";                  // Clear question field
+            ddlCategories.ClearSelection();         // Clear selected categories
+            litSelectedCategories.Text = "";        // Clear category tags
+            if (Session["SubmitSuccess"] != null && (bool)Session["SubmitSuccess"])
+            {
+                lblMessage.CssClass = "message";
+                lblMessage.Text = "Question submitted successfully.";
+                Session.Remove("SubmitSuccess");
+            }
         }
     }
 
@@ -58,48 +70,78 @@ public partial class Patients_AskQuestion : System.Web.UI.Page
         litSelectedCategories.Text = string.Join("", selected);
     }
 
-    protected void btnSubmit_Click(object sender, EventArgs e)
+    
+
+
+
+
+protected void btnSubmit_Click(object sender, EventArgs e)
+{
+    string question = txtQuestion.Text.Trim();
+    string email = Session["userId"] != null ? Session["userId"].ToString() : "";
+
+    if (string.IsNullOrEmpty(question) || string.IsNullOrEmpty(email))
     {
-        string question = txtQuestion.Text.Trim();
-        string email = Session["userId"] != null ? Session["userId"].ToString() : string.Empty; // Fixed null check
-
-        if (string.IsNullOrEmpty(question))
-        {
-            lblMessage.ForeColor = System.Drawing.Color.Red;
-            lblMessage.Text = "Please enter your question.";
-            return;
-        }
-
-        List<string> selectedCategories = new List<string>();
-
-        foreach (ListItem item in ddlCategories.Items)
-        {
-            if (item.Selected)
-            {
-                selectedCategories.Add(item.Text);  // or item.Value for IDs
-            }
-        }
-
-        if (selectedCategories.Count == 0)
-        {
-            lblMessage.ForeColor = System.Drawing.Color.Red;
-            lblMessage.Text = "Please select at least one category.";
-            return;
-        }
-
-        // Simulated database save (replace with actual logic)
-        // string questionId = SaveQuestionToDatabase(email, question, selectedCategories);
-
-        lblMessage.ForeColor = System.Drawing.Color.Green;
-        lblMessage.Text = "Your question has been submitted successfully!";
-        txtQuestion.Text = string.Empty;
-
-        // Deselect all categories after submitting
-        foreach (ListItem item in ddlCategories.Items)
-        {
-            item.Selected = false;
-        }
-
-        litSelectedCategories.Text = string.Empty;
+        lblMessage.CssClass = "error-message";
+        lblMessage.Text = "Please enter a question.";
+        return;
     }
+
+    List<string> selectedCategories = new List<string>();
+    foreach (ListItem item in ddlCategories.Items)
+    {
+        if (item.Selected)
+        {
+            selectedCategories.Add(item.Text);
+        }
+    }
+
+    if (selectedCategories.Count == 0)
+    {
+        lblMessage.CssClass = "error-message";
+        lblMessage.Text = "Please select at least one category.";
+        return;
+    }
+
+    string categories = string.Join(", ", selectedCategories);
+   // string connStr = ConfigurationManager.ConnectionStrings["Data Source=(LocalDB)\\v11.0;AttachDbFilename=C:\\Users\\HP\\Desktop\\Women_HealthCare_Solutions\\App_Data\\Database.mdf;Integrated Security=True"
+//].ConnectionString;
+    string connStr = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
+
+
+    try
+    {
+        using (SqlConnection con = new SqlConnection(connStr))
+        {
+            string query = "SELECT * FROM QuestionsAnswers"; // Match your table
+            SqlDataAdapter adp = new SqlDataAdapter(query, con);
+            SqlCommandBuilder cb = new SqlCommandBuilder(adp);
+            DataSet ds = new DataSet();
+            adp.Fill(ds, "QA");
+
+            DataTable dt = ds.Tables["QA"];
+            DataRow dr = dt.NewRow();
+
+            dr["PatientEmail"] = email;
+            dr["QuestionText"] = question;
+            dr["Category"] = categories;
+            dr["AnswerText"] = DBNull.Value; // Or "" if nullable
+            dr["DoctorEmail"] = DBNull.Value;
+            dr["AskedDate"] = DateTime.Now;
+
+            dt.Rows.Add(dr);
+            adp.Update(ds, "QA");
+
+            Session["SubmitSuccess"] = true;
+            Response.Redirect(Request.RawUrl); // PRG pattern
+
+        }
+    }
+    catch (Exception ex)
+    {
+        lblMessage.CssClass = "error-message";
+        lblMessage.Text = "Error while submitting: " + ex.Message;
+    }
+}
+
 }

@@ -28,7 +28,7 @@ public partial class Patients_MasterPage : System.Web.UI.MasterPage
     {
         // Log out logic (e.g., clear session)
         Session.Clear();
-        Response.Redirect("~/Login.aspx"); // Redirect to login page
+        Response.Redirect("~/GenUser/Login.aspx"); // Redirect to login page
     }
 
 

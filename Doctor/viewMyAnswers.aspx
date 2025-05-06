@@ -1,67 +1,98 @@
-﻿<%@ Page Title="My Answers" Language="C#" MasterPageFile="~/Doctor/MasterPage.master" AutoEventWireup="true" CodeFile="viewMyAnswers.aspx.cs" Inherits="Doctor_ViewMyAnswers" %>
+﻿<%@ Page Title="View My Answers" Language="C#" MasterPageFile="~/Doctor/MasterPage.master"
+    AutoEventWireup="true" CodeFile="ViewMyAnswers.aspx.cs" Inherits="Doctors_ViewMyAnswers" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style>
-        .answers-container {
+        .answer-container {
             max-width: 900px;
-            margin: 40px auto;
-            padding: 25px;
-            background-color: #f9f9f9;
+            margin: 30px auto;
+            padding: 10px;
+        }
+
+        .answer-card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 25px;
         }
 
-        .answers-header {
-            font-size: 26px;
+        .question-label {
             font-weight: bold;
+            margin-bottom: 5px;
             color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #007b7f;
-            padding-bottom: 10px;
         }
 
-        .styled-gridview {
+        .question-value {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .answer-box {
             width: 100%;
-            border-collapse: collapse;
-        }
-
-        .styled-gridview th, .styled-gridview td {
-            padding: 12px 15px;
+            min-height: 100px;
+            font-size: 14px;
+            padding: 10px;
             border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
         }
 
-        .styled-gridview th {
+        .submit-btn {
+            margin-top: 10px;
             background-color: #007b7f;
             color: white;
-            text-align: left;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
         }
 
-        .styled-gridview tr:nth-child(even) {
-            background-color: #f2f2f2;
+        .submit-btn:hover {
+            background-color: #005f60;
         }
 
-        .styled-gridview tr:hover {
-            background-color: #e6f7f7;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 20px;
-            color: #888;
-            font-style: italic;
+        .message-label {
+            font-weight: bold;
+            color: green;
+            margin-top: 15px;
+            display: block;
         }
     </style>
+</asp:Content>
 
-    <div class="answers-container">
-        <div class="answers-header">My Submitted Answers</div>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="answer-container">
+        <asp:Repeater ID="rptAnsweredQuestions" runat="server" OnItemCommand="rptAnsweredQuestions_ItemCommand">
+            <ItemTemplate>
+                <div class="answer-card">
+                    <div class="question-label">Question:</div>
+                    <div class="question-value"><%# Eval("QuestionText") %></div>
 
-        <asp:GridView ID="gvAnswers" runat="server" AutoGenerateColumns="False" CssClass="styled-gridview" EmptyDataText="No answers found.">
-            <Columns>
-                <asp:BoundField DataField="QuestionText" HeaderText="Question" />
-                <asp:BoundField DataField="AnswerText" HeaderText="Answer" />
-                <asp:BoundField DataField="AnswerDate" HeaderText="Answered On" DataFormatString="{0:dd-MM-yyyy HH:mm}" />
-            </Columns>
-        </asp:GridView>
+                    <div class="question-label">Category:</div>
+                    <div class="question-value"><%# Eval("Category") %></div>
+
+                    <div class="question-label">Answered by:</div>
+                    <div class="question-value"><%# Eval("DoctorEmail") %></div>
+
+                    <div class="question-label">Answered on:</div>
+                    <div class="question-value"><%# Eval("AnsweredDate", "{0:dd-MMM-yyyy hh:mm tt}") %></div>
+
+                    <!-- Editable Answer -->
+                    <div class="question-label">Edit Your Answer:</div>
+                    <asp:TextBox ID="txtAnswer" runat="server" CssClass="answer-box" 
+                                 TextMode="MultiLine" Text='<%# Eval("AnswerText") %>' />
+
+                    <!-- Update Button -->
+                    <asp:Button ID="btnUpdate" runat="server" CommandName="UpdateAnswer" 
+                                CommandArgument='<%# Eval("QuestionID") %>' Text="Update Answer"
+                                CssClass="submit-btn" />
+                </div>
+            </ItemTemplate>
+        </asp:Repeater>
+
+        <asp:Label ID="lblMessage" runat="server" CssClass="message-label" />
     </div>
 </asp:Content>

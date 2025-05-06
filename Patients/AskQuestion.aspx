@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="Ask Question" Language="C#" MasterPageFile="MasterPage.master"
     AutoEventWireup="true" CodeFile="AskQuestion.aspx.cs" Inherits="Patients_AskQuestion" %>
-
+<asp:Content ID="PageTitleContent" ContentPlaceHolderID="PageTitle" runat="server">
+    Ask Question
+</asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="head" Runat="Server">
     <style>
         /* Overall page container */

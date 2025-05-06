@@ -2,54 +2,87 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
-public partial class Doctor_ViewMyAnswers : System.Web.UI.Page
+public partial class Doctors_ViewMyAnswers : Page
 {
-    string connStr = ConfigurationManager.ConnectionStrings["yourConnectionStringName"].ConnectionString;
+    // Connection string from Web.config
+    private string connString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
 
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            LoadAnswers();
+            LoadAnsweredQuestions();
         }
     }
 
-    private void LoadAnswers()
+    private void LoadAnsweredQuestions()
     {
-        string doctorEmail = Session["DoctorEmail"] as string;
+        // Get doctor email from session
+        string doctorEmail = Session["userId"] != null ? Session["userId"].ToString() : "";
 
         if (string.IsNullOrEmpty(doctorEmail))
         {
-            Response.Redirect("~/Login.aspx"); // Session expired or not logged in
+            lblMessage.Text = "Session expired. Please log in again.";
             return;
         }
 
-        using (SqlConnection conn = new SqlConnection(connStr))
-        {
-            string query = @"
-                SELECT 
-                    Q.QuestionText, 
-                    A.AnswerText, 
-                    A.AnswerDate
-                FROM 
-                    Answers A
-                INNER JOIN 
-                    Questions Q ON A.QuestionId = Q.QuestionId
-                WHERE 
-                    A.DoctorEmail = @DoctorEmail
-                ORDER BY 
-                    A.AnswerDate DESC";
+        string query = "SELECT * FROM QuestionsAnswers WHERE DoctorEmail = @DoctorEmail AND AnswerText IS NOT NULL ORDER BY AnsweredDate DESC";
 
-            SqlCommand cmd = new SqlCommand(query, conn);
+        using (SqlConnection conn = new SqlConnection(connString))
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
             cmd.Parameters.AddWithValue("@DoctorEmail", doctorEmail);
 
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable dt = new DataTable();
             da.Fill(dt);
 
-            gvAnswers.DataSource = dt;
-            gvAnswers.DataBind();
+            rptAnsweredQuestions.DataSource = dt;
+            rptAnsweredQuestions.DataBind();
         }
+    }
+
+    protected void rptAnsweredQuestions_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+        if (e.CommandName == "UpdateAnswer")
+        {
+            int questionId = Convert.ToInt32(e.CommandArgument);
+            TextBox txtAnswer = (TextBox)e.Item.FindControl("txtAnswer");
+
+            if (txtAnswer != null)
+            {
+                string updatedAnswer = txtAnswer.Text.Trim();
+
+                if (string.IsNullOrEmpty(updatedAnswer))
+                {
+                    lblMessage.Text = "Answer cannot be empty.";
+                    return;
+                }
+
+                UpdateAnswer(questionId, updatedAnswer, DateTime.Now);
+            }
+        }
+    }
+
+    private void UpdateAnswer(int questionId, string newAnswer, DateTime answeredDate)
+    {
+        string query = "UPDATE QuestionsAnswers SET AnswerText = @AnswerText, AnsweredDate = @AnsweredDate WHERE QuestionID = @QuestionID";
+
+        using (SqlConnection conn = new SqlConnection(connString))
+        using (SqlCommand cmd = new SqlCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@AnswerText", newAnswer);
+            cmd.Parameters.AddWithValue("@AnsweredDate", answeredDate);
+            cmd.Parameters.AddWithValue("@QuestionID", questionId);
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+
+        lblMessage.Text = "Answer updated successfully.";
+        LoadAnsweredQuestions();
     }
 }

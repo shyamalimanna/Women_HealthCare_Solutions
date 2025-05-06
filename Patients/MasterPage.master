@@ -89,7 +89,7 @@
             <div class="nav-left">
                 <asp:HyperLink ID="lnkDashboard" runat="server" NavigateUrl="PatientDashboard.aspx">Dashboard</asp:HyperLink>
                 <asp:HyperLink ID="lnkAskQuestion" runat="server" NavigateUrl="AskQuestion.aspx">Ask Question</asp:HyperLink>
-                <asp:HyperLink ID="lnkMyQuestions" runat="server" NavigateUrl="MyQuestions.aspx">My Questions</asp:HyperLink>
+                <asp:HyperLink ID="lnkMyQuestions" runat="server" NavigateUrl="MyQuestions.aspx">My Answers</asp:HyperLink>
             </div>
             <div class="nav-right">
                 Welcome, <asp:Label ID="lblPatientName" runat="server" Text="Patient" />

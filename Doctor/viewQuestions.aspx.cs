@@ -1,31 +1,86 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
 using System.Web.UI.WebControls;
 
-public partial class Doctor_ViewQuestions : System.Web.UI.Page
+public partial class Doctors_ViewQuestions : System.Web.UI.Page
 {
+    // Connection string from web.config
+    string connStr = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            LoadQuestions();
+            LoadUnansweredQuestions();
         }
     }
 
-    private void LoadQuestions()
+    // Load all unanswered questions
+    private void LoadUnansweredQuestions()
     {
-        // Replace this with actual database fetch logic
-        DataTable dt = new DataTable();
-        dt.Columns.Add("QuestionId");
-        dt.Columns.Add("PatientName");
-        dt.Columns.Add("Question");
-        dt.Columns.Add("DateAsked");
+        using (SqlConnection con = new SqlConnection(connStr))
+        {
+            string query = "SELECT * FROM QuestionsAnswers WHERE AnswerText IS NULL";
 
-        // Sample data
-        dt.Rows.Add("1", "Ravi Sharma", "I have chest pain for 2 days.", DateTime.Now.AddDays(-1));
-        dt.Rows.Add("2", "Priya Singh", "How to control high blood pressure?", DateTime.Now.AddDays(-2));
+            using (SqlDataAdapter da = new SqlDataAdapter(query, con))
+            {
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
-        gvQuestions.DataSource = dt;
-        gvQuestions.DataBind();
+                rptQuestions.DataSource = dt;
+                rptQuestions.DataBind();
+            }
+        }
+    }
+
+    // Handle the submission of an answer to a question
+    protected void rptQuestions_ItemCommand(object source, RepeaterCommandEventArgs e)
+    {
+        if (e.CommandName == "Answer")
+        {
+            // Retrieve the QuestionID and answer text
+            int questionId = Convert.ToInt32(e.CommandArgument);
+            TextBox txtAnswer = (TextBox)e.Item.FindControl("txtAnswer");
+            string answer = txtAnswer != null ? txtAnswer.Text.Trim() : "";
+            string doctorEmail = Session["userId"] != null ? Session["userId"].ToString() : "";
+
+            // Input validation
+            if (string.IsNullOrEmpty(answer) || string.IsNullOrEmpty(doctorEmail))
+            {
+                lblMessage.Text = "Answer or session is empty.";
+                return;
+            }
+
+            // Update the answer in the database using DataAdapter and DataTable
+            using (SqlConnection con = new SqlConnection(connStr))
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM QuestionsAnswers WHERE QuestionID = @QuestionID", con);
+                da.SelectCommand.Parameters.AddWithValue("@QuestionID", questionId);
+
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    DataRow dr = dt.Rows[0];
+                    dr["AnswerText"] = answer;
+                    dr["DoctorEmail"] = doctorEmail;
+                    dr["AnsweredDate"] = DateTime.Now;
+
+                    // Push the update to the database
+                    da.Update(dt);
+
+                    lblMessage.Text = "Answer submitted successfully.";
+                    LoadUnansweredQuestions(); // Refresh
+                }
+                else
+                {
+                    lblMessage.Text = "Question not found.";
+                }
+            }
+        }
     }
 }
