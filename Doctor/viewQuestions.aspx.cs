@@ -1,61 +1,31 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
-using System.Configuration;
 using System.Web.UI.WebControls;
 
-public partial class Doctor_viewQuestions : System.Web.UI.Page
+public partial class Doctor_ViewQuestions : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                string query = "SELECT QuestionId, Question FROM Questions WHERE Answer IS NULL";
-                SqlDataAdapter da = new SqlDataAdapter(query, conn);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                gvQuestions.DataSource = dt;
-                gvQuestions.DataBind();
-            }
+            LoadQuestions();
         }
     }
 
-    protected void gvQuestions_RowCommand(object sender, GridViewCommandEventArgs e)
+    private void LoadQuestions()
     {
-        if (e.CommandName == "Answer")
-        {
-            int index = Convert.ToInt32(e.CommandArgument);
-            GridViewRow row = gvQuestions.Rows[index];
+        // Replace this with actual database fetch logic
+        DataTable dt = new DataTable();
+        dt.Columns.Add("QuestionId");
+        dt.Columns.Add("PatientName");
+        dt.Columns.Add("Question");
+        dt.Columns.Add("DateAsked");
 
-            TextBox txtAnswer = (TextBox)row.FindControl("txtAnswer");
-            string answer = txtAnswer.Text.Trim();
-            int questionId = Convert.ToInt32(gvQuestions.DataKeys[index].Value);
+        // Sample data
+        dt.Rows.Add("1", "Ravi Sharma", "I have chest pain for 2 days.", DateTime.Now.AddDays(-1));
+        dt.Rows.Add("2", "Priya Singh", "How to control high blood pressure?", DateTime.Now.AddDays(-2));
 
-            if (!string.IsNullOrEmpty(answer))
-            {
-                string connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
-
-                using (SqlConnection conn = new SqlConnection(connectionString))
-                {
-                    string query = "UPDATE Questions SET Answer = @Answer, AnswerDate = @AnswerDate WHERE QuestionId = @QuestionId";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@Answer", answer);
-                    cmd.Parameters.AddWithValue("@AnswerDate", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@QuestionId", questionId);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
-
-                Response.Redirect("viewQuestions.aspx");
-            }
-            else
-            {
-                Response.Write("<script>alert('Please enter an answer.');</script>");
-            }
-        }
+        gvQuestions.DataSource = dt;
+        gvQuestions.DataBind();
     }
 }

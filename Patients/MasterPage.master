@@ -1,16 +1,24 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Doctor_DoctorMaster" %>
+﻿<%@ Master  Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Patients_MasterPage" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title>Doctor - Women's HealthCare Solutions</title>
+    <title>
+        <asp:ContentPlaceHolder ID="PageTitle" runat="server" />
+
+    </title>
+
+
+    <asp:ContentPlaceHolder ID="head" runat="server" />
     <style type="text/css">
         body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff0f5;
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            padding: 0;
         }
 
+        /* Navbar styling */
         .navbar {
             background-color: #007b7f;
             padding: 15px 30px;
@@ -53,10 +61,12 @@
             color: #007b7f;
         }
 
+        /* Content styling */
         .content {
             padding: 30px;
         }
 
+        /* Footer styling */
         .footer {
             background-color: #007b7f;
             color: white;
@@ -77,12 +87,12 @@
         <!-- Navbar -->
         <div class="navbar">
             <div class="nav-left">
-                <asp:HyperLink ID="lnkDashboard" runat="server" NavigateUrl="~/Doctor/DoctorHomePage.aspx">Dashboard</asp:HyperLink>
-                <asp:HyperLink ID="lnkViewQuestions" runat="server" NavigateUrl="~/Doctor/ViewQuestions.aspx">View Questions</asp:HyperLink>
-                <asp:HyperLink ID="lnkMyAnswers" runat="server" NavigateUrl="~/Doctor/ViewMyAnswers.aspx">View My Answers</asp:HyperLink>
+                <asp:HyperLink ID="lnkDashboard" runat="server" NavigateUrl="PatientDashboard.aspx">Dashboard</asp:HyperLink>
+                <asp:HyperLink ID="lnkAskQuestion" runat="server" NavigateUrl="AskQuestion.aspx">Ask Question</asp:HyperLink>
+                <asp:HyperLink ID="lnkMyQuestions" runat="server" NavigateUrl="MyQuestions.aspx">My Questions</asp:HyperLink>
             </div>
             <div class="nav-right">
-                Welcome,<asp:Label ID="lblUserName" runat="server" Text="Name" />
+                Welcome, <asp:Label ID="lblPatientName" runat="server" Text="Patient" />
                 <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" CssClass="logout-btn" />
             </div>
         </div>

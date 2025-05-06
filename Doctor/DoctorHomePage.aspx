@@ -1,31 +1,37 @@
-﻿<%@ Page Title="Doctor Dashboard" Language="C#" AutoEventWireup="true" CodeFile="DoctorHomePage.aspx.cs" Inherits="Doctor_DoctorHomePage" %>
+﻿<%@ Page Title="Doctor Dashboard" Language="C#" AutoEventWireup="true" CodeFile="DoctorHomePage.aspx.cs" Inherits="Doctor_DoctorHomePage" MasterPageFile="~/Doctor/MasterPage.master" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head id="Head1" runat="server">
-    <title>Doctor Dashboard - Women's HealthCare Solutions</title>
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style type="text/css">
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('../Picture/DoctorReg2.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            margin: 0;
-            padding: 0;
-            color: white;
-        }
-
         .dashboard-content {
             padding: 30px;
             margin: 60px auto;
-            max-width: 700px;
+            max-width: 800px;
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             color: #333;
+        }
+
+        .dashboard-title {
             text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .profile-section {
+            margin-bottom: 30px;
+        }
+
+        .profile-item {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .profile-value {
+            font-size: 18px;
+            color: #555;
         }
 
         .dashboard-link {
@@ -53,36 +59,67 @@
             margin-bottom: 25px;
         }
 
-        .footer {
-            background-color: #007b7f;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            font-size: 14px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+        .profile-row {
+    display: flex;
+    margin-bottom: 12px;
+}
+
+.profile-item {
+    width: 180px;
+    font-weight: bold;
+    color: #222;
+}
+
+.profile-value {
+    flex: 1;
+    color: #555;
+}
+
     </style>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <!-- Dashboard Content -->
-        <div class="dashboard-content">
-            <div class="user-greeting">
-                Welcome, Dr. <asp:Label ID="lblUserName" runat="server" />
-            </div>
-            <div>
-                <a href="ViewQuestions.aspx" class="dashboard-link">View Questions</a>
-                <a href="ViewMyAnswers.aspx" class="dashboard-link">View My Answers</a>
-                <a href="Logout.aspx" class="dashboard-link">Logout</a>
-            </div>
+    <script>
+        console.log(sessionStorage.getItem('userId'));
+        console.log(sessionStorage.getItem('role'));
+
+    </script>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-content">
+        <!-- Welcome and Doctor's Name -->
+        <div class="user-greeting">
+            Welcome, Dr. <asp:Label ID="lblDoctorName" runat="server" Text="Name" />
         </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            &copy; 2025 Women's HealthCare Solutions. Developed by Shyamali Manna
+      <!-- Profile Section -->
+<div class="profile-section">
+    <div class="dashboard-title">Your Profile</div>
+    <div class="profile-row">
+        <span class="profile-item">Name:</span>
+        <span class="profile-value">Dr. <asp:Label ID="Label1" runat="server" Text="Name" /></span>
+    </div>
+    <div class="profile-row">
+        <span class="profile-item">Address:</span>
+        <span class="profile-value"><asp:Label ID="lblDoctorAddress" runat="server" Text="Address" /></span>
+    </div>
+    <div class="profile-row">
+        <span class="profile-item">Contact Number:</span>
+        <span class="profile-value"><asp:Label ID="lblDoctorContact" runat="server" Text="Contact Number" /></span>
+    </div>
+    <div class="profile-row">
+        <span class="profile-item">Email:</span>
+        <span class="profile-value"><asp:Label ID="lblDoctorEmail" runat="server" Text="Email" /></span>
+    </div>
+</div>
+
+
+
+        <!-- Links for Dashboard Actions -->
+        <div>
+           <!--  <a href="viewQuestions.aspx" class="dashboard-link">View Questions</a>
+            <a href="viewMyAnswers.aspx" class="dashboard-link">View My Answers</a>
+               -->
+            <a href="UpdateProfile.aspx" class="dashboard-link">Update Profile</a>
+          
         </div>
-    </form>
-</body>
-</html>
+    </div>
+
+</asp:Content>

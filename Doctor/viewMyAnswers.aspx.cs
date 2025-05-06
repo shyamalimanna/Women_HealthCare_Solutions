@@ -2,36 +2,54 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
-public partial class Patients_viewMyAnswers : System.Web.UI.Page
+public partial class Doctor_ViewMyAnswers : System.Web.UI.Page
 {
+    string connStr = ConfigurationManager.ConnectionStrings["yourConnectionStringName"].ConnectionString;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
-            if (Session["userId"] == null)
-            {
-                Response.Redirect("Login.aspx"); // Safety check
-                return;
-            }
+            LoadAnswers();
+        }
+    }
 
-            string patientId = Session["userId"].ToString(); // Assuming "userId" is stored at login
+    private void LoadAnswers()
+    {
+        string doctorEmail = Session["DoctorEmail"] as string;
 
-            string connectionString = ConfigurationManager.ConnectionStrings["conStr"].ConnectionString;
+        if (string.IsNullOrEmpty(doctorEmail))
+        {
+            Response.Redirect("~/Login.aspx"); // Session expired or not logged in
+            return;
+        }
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                string query = "SELECT Question, Answer, AnswerDate FROM Questions WHERE PatientId = @PatientId";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@PatientId", patientId);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                gvMyAnswers.DataSource = dt;
-                gvMyAnswers.DataBind();
-            }
+        using (SqlConnection conn = new SqlConnection(connStr))
+        {
+            string query = @"
+                SELECT 
+                    Q.QuestionText, 
+                    A.AnswerText, 
+                    A.AnswerDate
+                FROM 
+                    Answers A
+                INNER JOIN 
+                    Questions Q ON A.QuestionId = Q.QuestionId
+                WHERE 
+                    A.DoctorEmail = @DoctorEmail
+                ORDER BY 
+                    A.AnswerDate DESC";
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@DoctorEmail", doctorEmail);
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            gvAnswers.DataSource = dt;
+            gvAnswers.DataBind();
         }
     }
 }

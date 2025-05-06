@@ -17,6 +17,7 @@ public partial class GenUser_MasterPage : System.Web.UI.MasterPage
             lblUserName.Text = "Welcome, Guest";
             btnLogout.Visible = false;
         }
+
     }
 
     // Handle Logout button click
